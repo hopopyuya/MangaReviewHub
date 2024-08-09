@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WQNVN67');</script>
+    <!-- End Google Tag Manager --> 
+
+    <meta charset="UTF-8">
+    <meta name="description" content="{{mangas[1]}}の漫画情報。レビュー、評価、作者、発行巻数など">
+    <meta name=”keywords” content=”漫画,マンガ,{{mangas[1]}},オススメ,レビュー,詳細”>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0">
+    <link rel= "stylesheet" type= "text/css" 
+    href= "{{ url_for('static',filename='CSS/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <title>{{mangas[1]}} の 漫画情報・レビュー・評価・あらすじ - Manga Review</title>
+</head>
+<body class="product_body">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQNVN67"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->  
+    <header>
+        <div class="headernav">
+            <h2><a href="/" class="header_logo">Manga Review</a></h2>
+            {% if current_user.is_authenticated %}
+            <ul class="headernav_list">
+                <li><a href="/mypage"><img src="/static/images/mypage1.png" width="32" class="header_icon"></a></li>
+                <div id="search-wrap_login">
+                    <form role="search" action="/result/" method="get">
+                    <input type="text" value="" name="search_word" id="search-text" placeholder="フリーワードを入力">
+                    </form>
+                    <!--/search-wrap--></div>
+            </ul>
+            {% else %}
+            <ul class="headernav_list">
+                <li><a href="/signup" role="botton" class="header_item1">新規登録</a></li>
+                <li><a href="/login" role="botton" class="header_item2">ログイン</a></li>
+                <div id="search-wrap">
+                    <form role="search" action="/result/" method="get">
+                        <input type="text" value="" name="search_word" id="search-text" placeholder="フリーワードを入力">
+                        </form>
+                        <!--/search-wrap--></div>
+            </ul>
+            {% endif %}
+        </div>
+    </header>
+    <div class="product_main1">
+        <div class="product_main1_header">
+            <h1>{{mangas[1]}} の 漫画情報・レビュー・評価・あらすじ</h1>
+        </div>
+        <div class="product_image_title">
+            <div class="product_image">
+                    <a href="/product/{{mangas[1]}}"><img src="{{mangas[2]}}"></a>
+            </div>
+            <div class="product_detail">
+                <h2 class="product_title">
+                        {{mangas[1]}}
+                        {% if manga_one in favorite_list %}
+                        <a href="/{{mangas[1]}}/favorite_delete"><img src="../static/images/favorite1.png" width="15" class="favorite_image"></a>
+                        {% else %}
+                        <a href="/{{mangas[1]}}/favorite"><img src="../static/images/favorite0.png" width="15" class="favorite_image"></a>
+                        {% endif %}
+                </h2>
+                <div class="revies_avgscore">
+                        <p>
+                            <span class="star5_rating" data-rate="{{revies_avgscore[0]}}"></span>
+                        </p>
+                        <p class="star_rating_text">
+                            {{ revies_avgscore[0] }}
+                        </p>
+                </div>
+                <div class="product_detail_others">
+                    <div class="product_detail_author">
+                        <p><span>作者 　　　　</span> <a href="/result/?search_word={{mangas[4]}}">{{mangas[4]}}</a></p>
+                    </div>
+                    <div class="product_detail_genre">
+                        <p><span>ジャンル　　</span> <a href="/result/?search_word={{mangas[5]}}">{{mangas[5]}}</a></p>
+                    </div>
+                    <div class="product_detail_publisher">
+                        <p><span>出版元　　　</span><a href="/result/?search_word={{mangas[6]}}">{{mangas[6]}}</a></p>
+                    </div>
+                    <div class="product_detail_volume">
+                        <p><span>発行巻数　　</span> {{mangas[7]}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product_story">
+                <p class="product_story_title">作品内容</p>
+                <h2 class="product_story_line">{{mangas[3]}}</h2>
+        </div>
+    </div>
+    <div class="product_main2">
+        <div class="product_review_body">
+            <div class="product_review_body_title">レビューする</div>
+            <form method="POST" class="product_review_form">
+                <label for="title">score</label>
+                <input type="range" id="score" name="title" min="0" max="5" step="0.1" value="3" class="score">
+                <span id="value" class="review_score_value">3</span>
+                <script>
+                    var elem = document.getElementById('score');
+                    var target = document.getElementById('value');
+                    var rangeValue = function (elem, target) {
+                      return function(evt){
+                        target.innerHTML = elem.value;
+                      }
+                    }
+                    elem.addEventListener('input', rangeValue(elem, target));
+                </script>
+                <label for="body">内容</label>
+                <textarea name="body" class="review_body" cols="30" rows="10"></textarea>
+                <!-- <input type="text" name="body" class="review_body"> -->
+                <input type="submit" value="送信" class="submit">
+            </form>
+        </div>
+    </div>
+    <div class="product_main3">
+            <h2 class="product_main3_title">{{mangas[1]}}のユーザーレビュー</h2>
+        {% for revie in revies %}
+        <article class="submited_review_all">
+            <p class="submited_user">{{ revie[5] }}の感想・評価</p>
+            <p class="submited_date">{{ revie[4] }}</p>
+            <div class="submited_review1">
+                <p>
+                    <span class="star5_rating" data-rate="{{ revie[1] }}"></span>
+                </p>
+                <p class="star5_rating_text">
+                    {{ revie[1] }}
+                </p>
+            </div>
+            <a href="/{{revie[0]}}/update" role="botton" class="submited_review_modified1">編集</a>
+            <a href="/{{revie[0]}}/delete" role="botton" class="submited_review_modified2">削除</a>
+            <p class="submited_review2">{{ revie[2] }}</p>
+        </article>
+        {% endfor %}
+    </div>
+    <footer class="product_footer">
+        <small>© .Manga Review ALL RIGHTS RESERVED.</small>
+    </footer>
+
+</body>
+</html>

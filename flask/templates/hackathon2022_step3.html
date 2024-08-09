@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="hackathon2022body">
+    <header>
+        <div class="headernav">
+            <h2><a href="/" class="header_logo">hackathon2022</a></h2>
+        </div>
+    </header>
+    <div class="hackathon2022main">
+        <p class="hackathon2022label">主成分得点の表示</p>
+        <div>
+            <img src="data:image/png:base64,{{ img_data }}" width="800"/>
+        </div>
+        {% if img_data %}
+        <div class="hackathon2022file">
+            <form method="post" enctype="multipart/form-data" class="hackathon2022form3" name="file" >
+                <label for="test"x class="hackathon2022label">[Step3] Analyze Clusters with the Scatterplot</label>
+                <p class="hackathon2022label2">ここでは作成したクラスター番号に基づいて、それぞれのクラスターがどのような特徴を持っているのかを調べます。</p>
+                <div class="hackathon2022file_subs">
+                {% if columns %}
+                    {% for column in columns %}
+                    <input type="checkbox" id="{{column}}" name ="paircolumns" value="{{column}}"/>
+                    <label for="{{column}}" class="hackathon_checkbox">{{column}}</label>
+                    {% endfor %}
+                {% endif %}
+                </div>
+                <div class="hackathon2022file_subs2">
+                    <input type="submit" value="プロット" class="submit2">
+                </div>
+            </form>
+                    
+        </div>
+        {% endif %}
+    </div>
+    <footer>
+        <small>© .hackathon2022 ALL RIGHTS RESERVED.</small>
+    </footer>
+{% endblock %}

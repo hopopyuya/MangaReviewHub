@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WQNVN67');</script>
+    <!-- End Google Tag Manager --> 
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0">
+    <link rel= "stylesheet" type= "text/css" 
+    href= "{{ url_for('static',filename='CSS/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    {% if search_word %}
+        <title>{{ search_word }}に関する漫画 | Manga Reviewマンガ</title>
+        <meta name="description" content="{{ search_word }}に関する漫画情報、マンガ一覧">
+        <meta name=”keywords” content=”漫画,マンガ,おすすめ,オススメ,レビュー,{{ search_word }}”>
+    {% elif genre %}
+        <title>{{ genre }}に関する漫画 | Manga Reviewマンガ</title>
+        <meta name="description" content="{{ genre }}に関する漫画情報、マンガ一覧">
+        <meta name=”keywords” content=”漫画,マンガ,おすすめ,オススメ,レビュー,{{ genre }}”>
+    {% elif publication_magazine %}
+        <title>{{ publication_magazine }}に関する漫画 | Manga Reviewマンガ</title>
+        <meta name="description" content="{{ publication_magazine }}に関する漫画情報、マンガ一覧">
+        <meta name=”keywords” content=”漫画,マンガ,おすすめ,オススメ,レビュー,{{ publication_magazine }}”>
+    {% else %}
+        <title>Manga Reviewの漫画一覧| Manga Reviewマンガ</title>
+        <meta name="description" content="豊富な漫画データベースから独自のアルゴリズムであなたが次に読みたくなるマンガをおすすめするマンガレビューサービス">
+        <meta name=”keywords” content=”漫画,マンガ,おすすめ,オススメ,レビュー,漫画一覧”>
+    {% endif %}
+</head>
+<body class="resultbody">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQNVN67"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->  
+    <header>
+        <div class="headernav">
+            <h2><a href="/" class="header_logo">Manga Review</a></h2>
+            {% if current_user.is_authenticated %}
+            <ul class="headernav_list">
+                <li><a href="/mypage"><img src="/static/images/mypage1.png" width="32" class="header_icon"></a></li>
+                <div id="search-wrap_login">
+                    <form role="search" action="/result/" method="get">
+                    <input type="text" value="" name="search_word" id="search-text" placeholder="フリーワードを入力">
+                    </form>
+                    <!--/search-wrap--></div>
+            </ul>
+            {% else %}
+            <ul class="headernav_list">
+                <li><a href="/signup" role="botton" class="header_item1">新規登録</a></li>
+                <li><a href="/login" role="botton" class="header_item2">ログイン</a></li>
+                <div id="search-wrap">
+                    <form role="search" action="/result/" method="get">
+                        <input type="text" value="" name="search_word" id="search-text" placeholder="フリーワードを入力">
+                        </form>
+                        <!--/search-wrap--></div>
+            </ul>
+            {% endif %}
+        </div>
+    </header>
+    <div class="result_main1">
+        <h2>検索結果</h2>
+        <div class="result">
+            {% for PageData1 in PageData %}
+                <div class="result_all">
+                    <li class="result_contents">
+                        <div class="result_img">
+                            <a href="/product/{{PageData1[1]}}"><img src="{{PageData1[2]}}" class="result_img_content"></a>
+                        </div>
+                        <div class="result_text">
+                            <div class="result_text_header">
+                                <h3>{{ PageData1[1] }}</h3>
+                            </div>
+                            <p>{{ PageData1[3] }}</p>
+                        </div>
+                    </li>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="pagenation">
+        <div class="pagenation_info">
+            {{ pagination.info }}
+        </div>
+        <div class="pagenation_link"> 
+            {{ pagination.links }}
+        </div>
+    </div>
+    <footer>
+        <small>© .Manga Review ALL RIGHTS RESERVED.</small>
+    </footer>
+</body>
+</html>

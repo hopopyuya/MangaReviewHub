@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="loginbody">
+    <header>
+        <div class="headernav">
+            <h2><a href="/" class="header_logo">Manga Review</a></h2>
+            {% if current_user.is_authenticated %}
+            <ul class="headernav_list">
+                <li><a href="/mypage"><img src="static/images/mypage1.png" width="32" class="header_icon"></a></li>
+                <div id="search-wrap_login">
+                    <form role="search" action="/result/" method="get">
+                    <input type="text" value="" name="search_word" id="search-text" placeholder="フリーワードを入力">
+                    </form>
+                    <!--/search-wrap--></div>
+            </ul>
+            {% else %}
+            <ul class="headernav_list">
+                <li><a href="/signup" role="botton" class="header_item1">新規登録</a></li>
+                <li><a href="/login" role="botton" class="header_item2">ログイン</a></li>
+                <div id="search-wrap">
+                    <form role="search" action="/result/" method="get">
+                        <input type="text" value="" name="search_word" id="search-text" placeholder="フリーワードを入力">
+                        </form>
+                        <!--/search-wrap--></div>
+            </ul>
+            {% endif %}
+        </div>
+    </header>
+    <div class="login_main1">
+        <h2>編集画面</h2>
+    {% for review1 in review %}
+    <div class="signup">
+        <form method="POST">
+            <h3>review内容を変更する</h3>
+            <label for="title">score</label>
+            <input type="range" id="score" name="title" min="0" max="5" step="0.1" value={{ review1[1] }} class="score">
+            <span id="value" class="review_score_value">{{ review1[1] }}</span>
+            <script>
+                var elem = document.getElementById('score');
+                var target = document.getElementById('value');
+                var rangeValue = function (elem, target) {
+                  return function(evt){
+                    target.innerHTML = elem.value;
+                  }
+                }
+                elem.addEventListener('input', rangeValue(elem, target));
+            </script>
+            <p>内容</p>
+            <input type="text" name="body" class="review_body" value={{ review1[2] }}>
+            <input type="submit" value="更新">
+        </form>
+    </div>
+    {% endfor %}
+    </div>
+    <footer>
+        <small>© .Manga Review ALL RIGHTS RESERVED.</small>
+    </footer>
+</div>
+{% endblock %}

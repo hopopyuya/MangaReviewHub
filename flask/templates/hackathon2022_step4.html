@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="hackathon2022body">
+    <header>
+        <div class="headernav">
+            <h2><a href="/" class="header_logo">hackathon2022</a></h2>
+        </div>
+    </header>
+    <div class="hackathon2022main">
+        <div>
+            <p class="hackathon2022label">Let's Understand the caracteristics of each cluster</p>
+            <img src="{{ url_for('static', filename='hackathon_image/output.png') }}" width="800"/>
+        </div>
+    <footer>
+        <small>© .hackathon2022 ALL RIGHTS RESERVED.</small>
+    </footer>
+{% endblock %}

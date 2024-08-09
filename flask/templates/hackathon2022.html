@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="hackathon2022body">
+    <header>
+        <div class="headernav">
+            <h2><a href="/" class="header_logo">hackathon2022</a></h2>
+        </div>
+    </header>
+    <div class="hackathon2022main">
+        <div class="hackathon2022file">
+            <form method="post" enctype="multipart/form-data" class="hackathon2022form" name="file" >
+                <label for="test"x class="hackathon2022label">[Step1] Import Data</label>
+                <p class="hackathon2022label2">Choose CSV FileBrowse...</p> 
+                <input type="file" name="file">
+                <input type="submit" value="送信する">
+            </form>
+        </div>
+    </div>
+    <footer>
+        <small>© .hackathon2022 ALL RIGHTS RESERVED.</small>
+    </footer>
+{% endblock %}

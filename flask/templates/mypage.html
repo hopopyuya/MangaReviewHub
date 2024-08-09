@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="maypagebody">
+    <header>
+        <div class="headernav">
+            <h2><a href="/" class="header_logo">Manga Review</a></h2>
+            {% if current_user.is_authenticated %}
+            <ul class="headernav_list">
+                <li><a href="/mypage"><img src="static/images/mypage1.png" width="32" class="header_icon"></a></li>
+                <div id="search-wrap_login">
+                    <form role="search" action="/result/" method="get">
+                    <input type="text" value="" name="search_word" id="search-text" placeholder="フリーワードを入力">
+                    </form>
+                    <!--/search-wrap--></div>
+            </ul>
+            {% else %}
+            <ul class="headernav_list">
+                <li><a href="/signup" role="botton" class="header_item1">新規登録</a></li>
+                <li><a href="/login" role="botton" class="header_item2">ログイン</a></li>
+                <div id="search-wrap">
+                    <form role="search" action="/result/" method="get">
+                        <input type="text" value="" name="search_word" id="search-text" placeholder="フリーワードを入力">
+                        </form>
+                        <!--/search-wrap--></div>
+            </ul>
+            {% endif %}
+        </div>
+    </header>
+    <div class="mypage_main1">
+        <div class="user_info">
+            <img src="static/images/mypage1.png" width="56" class="user_info_icon">
+            <h2>username : {{ current_user.username }}</h2>
+        </div>
+            <div class="mypage">
+                <div class="mypage_favorite_div">
+                    <div class="mypage_favorite_img">
+                        <img src="static/images/mypage_favorite.png" width="24">
+                        <p>お気に入り</p>
+                    </div>
+                    <div class="favorite_all">
+                    {% for favorite in favorite_list %}
+                        <article class="mypage_favorite">
+                            <a href="/product/{{favorite[0]}}"><img src="{{favorite[1]}}"></a>
+                            <p class="product_title">{{ favorite[0] }}</p>
+                        </article>
+                    {% endfor %}
+                    </div>
+                </div>
+                <div class="mypage_recomend_all">
+                    <div class="mypage_reccomend_img"> 
+                        <img src="static/images/reccomend_icon.png" width="24">
+                        <p>おすすめ</p>
+                    </div>
+                </div>
+                <div class="mypage_review_img"> 
+                    <img src="static/images/review_icon.png" width="24">
+                    <p>レビュー</p>
+                </div>
+                <div class="mypage_review_all">
+                    {% for review in review_list %}
+                    <article class="mypage_review">
+                        <a href="/product/{{ review[3] }}" class="main4_contents_submited_review3">
+                            <h3 class="product_main3_title">{{ review[3] }}のレビュー</h3> 
+                        </a> 
+                        <p class="submited_user">{{ review[5] }}</p>
+                        <p class="submited_date">{{ review[4] }}</p>
+                        <h2 class="submited_review1">
+                            <p>
+                                <span class="star5_rating" data-rate="{{ review[1] }}"></span>
+                            </p>
+                            <p class="star5_rating_text">
+                                {{ review[1] }}
+                            </p>
+                        </h2>
+                        <p class="submited_review2">{{ review[2] }}</p>
+                    </article>
+                {% endfor %}
+                </div>
+            </div>
+    </div>
+    <footer>
+        <small>© .Manga Review ALL RIGHTS RESERVED.</small>
+    </footer>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="loginbody">
+    <header>
+        <div class="headernav">
+            <h2><a href="/" class="header_logo">Manga Review</a></h2>
+            {% if current_user.is_authenticated %}
+            <ul class="headernav_list">
+                <li><a href="/mypage"><img src="static/images/mypage1.png" width="32" class="header_icon"></a></li>
+                <div id="search-wrap_login">
+                    <form role="search" action="/result/" method="get">
+                    <input type="text" value="" name="search_word" id="search-text" placeholder="フリーワードを入力">
+                    </form>
+                    <!--/search-wrap--></div>
+            </ul>
+            {% else %}
+            <ul class="headernav_list">
+                <li><a href="/signup" role="botton" class="header_item1">新規登録</a></li>
+                <li><a href="/login" role="botton" class="header_item2">ログイン</a></li>
+                <div id="search-wrap">
+                    <form role="search" action="/result/" method="get">
+                        <input type="text" value="" name="search_word" id="search-text" placeholder="フリーワードを入力">
+                        </form>
+                        <!--/search-wrap--></div>
+            </ul>
+            {% endif %}
+        </div>
+    </header>
+    <div class="login_main1">
+        <form method="POST">
+            <div class="login">
+                <h2>usernameでログイン</h2>
+                {% if error %}
+                <p class=error><strong>Error:</strong> {{ error }}
+                {% endif %}
+                <input type="text" placeholder="username" name="username"><br>
+                <input type="password" placeholder="password" name="password"><br>
+                <input type="submit" value="ログイン">
+            </div>
+        </form>
+        <div class="to_signup">
+            <p>アカウントをお持ちでない場合</p>
+            <a href="/signup">新規登録</a>
+        </div>
+    </div>
+    <footer>
+        <small>© .Manga Review ALL RIGHTS RESERVED.</small>
+    </footer>
+</div>
+{% endblock %}

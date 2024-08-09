@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block content %}
+<body class="topbody">
+    <div class="main1">
+        <div class="headernav">
+            <h2><a href="/" class="header_logo">Manga Review</a></h2>
+            {% if current_user.is_authenticated %}
+            <ul class="headernav_list">
+                <li><a href="/mypage"><img src="static/images/mypage1.png" width="32" class="header_icon"></a></li>
+                <div id="search-wrap_login">
+                    <form role="search" action="/result/" method="get">
+                    <input type="text" value="" name="search_word" id="search-text" placeholder="フリーワードを入力">
+                    </form>
+                    <!--/search-wrap--></div>
+            </ul>
+            {% else %}
+            <ul class="headernav_list">
+                <li><a href="/signup" role="botton" class="header_item1">新規登録</a></li>
+                <li><a href="/login" role="botton" class="header_item2">ログイン</a></li>
+                <div id="search-wrap">
+                    <form role="search" action="/result/" method="get">
+                        <input type="text" value="" name="search_word" id="search-text" placeholder="フリーワードを入力">
+                        </form>
+                        <!--/search-wrap--></div>
+            </ul>
+            {% endif %}
+        </div>
+        <h1 class="main1_header">国内最大規模のマンガレビューサービス<br>
+            約100,000タイトルから観たい漫画がきっと見つかる
+        </h1>
+        <div class="topbtn">
+            <div class="btn-wrap btn-wrap-pc-sp">
+                <a href="/signup" class="btn btn-pc-sp btn-pc-sp--contact">
+                    新規登録は<br>こちら
+                    <i class="fas fa-angle-right fa-position-right"></i>
+                </a>
+                <a href="/login" class="btn btn-pc-sp btn-pc-sp--tel">
+                    ログインは<br>こちら
+                    <i class="fas fa-angle-right fa-position-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="header_search">
+            <p class="search_title_header">読んだ・読みたい漫画を探す</p>
+            <div class="search_word">
+                <form role="search" action="/result/" method="get">
+                <input type="text" value="" name="search_word" id="search-word" placeholder="フリーワードを入力">
+                </form>
+                <!--/search-wrap-->
+            </div>
+        </div>
+        <div class="scrolldown1"><span>Scroll</span></div>
+    </div>
+    <div class="main2">
+        <div class="main2_header_all">
+            <img src="static/images/icon1.png" width="32" class="main2_img">
+            <h2 class="main2_header"># Manga Reviewで今注目のマンガ</h2>
+        </div>
+        <ul class="scroll_content">
+        {% for manga in mangas %}
+            <li>
+                <a href="/product/{{manga[0]}}"><img src="{{manga[3]}}"></a>
+                <h3>{{ manga[0] }}</h3>
+                <p>{{ manga[4] }}</p>
+            </li>
+        {% endfor %}
+        </ul>
+        <div class="button01">
+            <a href="/result/">もっと見る</a>
+        </div>
+    </div>
+    <div class="search">
+        <div class="main3_header_all">
+            <img src="static/images/search_icon2.png" width="32" class="main3_img">
+            <h2 class="main3_header"># ジャンル/出版社から探す</h2>
+        </div>
+        <div class="search_title_list">
+            <p class="search_title">ジャンル一覧</p>
+            <p class="search_title2">出版社一覧</p>
+        </div>
+        <div class="search_list_all">
+            <div class="genre_list">
+                <li><a href="/result/?search_word=少年マンガ" class="btn btn--orange btn--radius">少年マンガ</a></li>
+                <li><a href="/result/?search_word=青年マンガ" class="btn btn--orange btn--radius">青年マンガ</a></li>
+                <li><a href="/result/?search_word=少女マンガ" class="btn btn--orange btn--radius">少女マンガ</a></li>
+                <li><a href="/result/?search_word=女性マンガ" class="btn btn--orange btn--radius">女性マンガ</a></li>
+            </div>
+            <div class="publication_magazine_list">
+                <li><a href="/result/?search_word=集英社" class="btn btn--orange btn--radius">集英社</a></li>
+                <li><a href="/result/?search_word=講談社" class="btn btn--orange btn--radius">講談社</a></li>
+                <li><a href="/result/?search_word=小学館" class="btn btn--orange btn--radius">小学館</a></li>
+                <li><a href="/result/?search_word=KADOKAWA" class="btn btn--orange btn--radius">KADOKAWA</a></li>
+                <li><a href="/result/?search_word=ハーレクイン" class="btn btn--orange btn--radius">ハーレクイン</a></li>
+            </div>
+        </div>
+    </div>
+    <div class="main4">
+        <div class="main4_header_all">
+            <img src="static/images/icon3.png" width="32" class="main4_img">
+            <h2 class="main4_header"># Manga Reviewに最近投稿されたコメント</h2>
+        </div>
+        <div class="main4_contents">
+            {% for review in reviews %}
+            <article class="main4_contents_submited_review_all">
+                <a href="/product/{{ review[3] }}" class="main4_contents_submited_review3">
+                    <h2 class="main4_contents_submited_review3">{{ review[3] }}のユーザーレビュー</h2>
+                </a>
+                <p class="main4_submited_user">{{ review[5] }}の感想・評価</p>
+                <p class="main4_submited_date">{{ review[4] }}</p>
+                <div class="main4_contents_submited_review1">
+                    <p>
+                        <span class="star5_rating" data-rate="{{ review[1] }}"></span>
+                    </p>
+                    <p class="star5_rating_text">
+                        {{ review[1] }}
+                    </p>
+                </div>
+                <p class="main4_contents_submited_review2">{{ review[2] }}</p>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+    <footer>
+        <small>© .Manga Review ALL RIGHTS RESERVED.</small>
+    </footer>
+</body>
+{% endblock %}
