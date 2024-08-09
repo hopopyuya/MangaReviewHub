@@ -1,0 +1,6 @@
+__pycache__/
+manga_image/
+.Trash-0/
+.DS_Store
+.ipynb_checkpoints
+.env
