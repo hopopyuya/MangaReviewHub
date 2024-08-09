@@ -4,3 +4,4 @@ manga_image/
 .DS_Store
 .ipynb_checkpoints
 .env
+*.db
